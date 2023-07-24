@@ -1,0 +1,14 @@
+.graph {
+    display: flex;
+    margin: 0 100px;
+    gap: 2px;
+    height: 80vh;
+    height: 80dvh;
+    align-items: end;
+
+    &__bar {
+        color: black;
+        background-color: #9D3340;
+        width: 3px;
+    }
+}

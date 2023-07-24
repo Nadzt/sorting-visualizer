@@ -1,0 +1,44 @@
+@media (prefers-reduced-motion: no-preference) {
+    :root {
+      scroll-behavior: smooth;
+    }
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+::selection {
+    background-color: black;
+    color: #ECE8E1;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+
+body {
+    background-color: #ECE8E1;
+    color: black;
+}
+
+a,
+a:visited {
+    text-decoration: none;
+    color: currentColor;
+}
+
+ul {
+    list-style: none;
+}
+
+@media only screen and (max-width: 600px) {
+    html {
+        font-size: 50%
+    }    
+}
