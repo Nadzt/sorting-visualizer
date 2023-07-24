@@ -13,6 +13,7 @@ const Navbar = ({ generateNewArray, barArray, setBarArray }: Props) => {
             <button onClick={generateNewArray}>Generate new content</button>
             <button onClick={() => setBarArray(mergeSort(barArray))}>Merge Sort</button>
             <button onClick={() => testAlgorithm(mergeSort)}>Merge Sort TEST</button>
+            
             <button onClick={generateNewArray}>Quick Sort</button>
             <button onClick={generateNewArray}>Heap Sort</button>
             <button onClick={generateNewArray}>Bubble Sort</button>
