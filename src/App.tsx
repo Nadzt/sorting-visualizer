@@ -24,9 +24,9 @@ function App() {
             <Navbar 
                 generateNewArray={() => setBarArray(generateNewArray(barAmmount, minBarValue, maxBarValue))}
                 setBarArray={setBarArray}
-                barArray={barArray}
+                barArray={[10, 5, 9, 2, 6, 7, 10, 1]}
             />
-            <Graph data={barArray}/>
+            <Graph data={[10, 5, 9, 2, 6, 7, 10, 1]}/>
         </div>
     )
 }

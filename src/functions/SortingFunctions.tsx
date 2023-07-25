@@ -41,6 +41,7 @@ interface Animation {
     idx1: number,
     idx2: number,
     translate: boolean,
+    final: number,
 }
 
 interface OffsettedArr {
@@ -53,9 +54,9 @@ export const createAnimation = (arr: number[], func: "merge" ): void => {
 
     switch (func) {
         case "merge":
-            mergeSort(arr, animationsArray)
+            mergeSort(arr, animationsArray, 0, arr.length)
     }
-
+    console.log(animationsArray)
     animate(animationsArray)
 }
 
@@ -63,6 +64,7 @@ export const animate = (animations: Animation []) => {
     const green = "#619677"
     const yellow = "#D5BC4C"
     const red = "#9D3340"
+    const black = "#0E1921"
 
     const graph = document.querySelector(".graph")
     animations.map((animation, i) => {
@@ -74,42 +76,54 @@ export const animate = (animations: Animation []) => {
                 if(animation.translate) {
                     graph?.insertBefore(barArray[animation.idx2], barArray[animation.idx1])
                     barArray[animation.idx1].style.backgroundColor = red
-                    barArray[animation.idx2].style.backgroundColor = red
+                    barArray[animation.idx2].style.backgroundColor = animation.final ? black : red
                 } else {
-                    barArray[animation.idx1].style.backgroundColor = green
+                    barArray[animation.idx1].style.backgroundColor = animation.final ? black : green
                     barArray[animation.idx2].style.backgroundColor = green
                 }
-            }, 10)
+            }, 1000)
 
-        }, 25 * i + 100)
+        }, 2500 * i + 100)
     })
 }
 
 // sorting algorithms
 
-export const mergeSort = (arr: number[], animations: Animation[] , offset = 0): OffsettedArr => {
+export const mergeSort = (arr: number[], animations: Animation[] , offset = 0, arrLength = 0): OffsettedArr => {
     if(arr.length === 1) return { arr, offset }
+    const checkFirstMerge = arr.length === arrLength
     const halfIndex = Math.floor(arr.length / 2)
     const right = arr.splice(halfIndex)
     return { 
         arr: mergeArray(
             mergeSort(arr, animations, offset),
             mergeSort(right, animations, offset + halfIndex),
-            animations
+            animations,
+            checkFirstMerge
         ),
         offset
     }
 }
 
-const mergeArray = (left: OffsettedArr, right: OffsettedArr, animations: Animation[]): number[] => {
+const mergeArray = (left: OffsettedArr, right: OffsettedArr, animations: Animation[], firstMerge: boolean): number[] => {
     const arr = []
     let rightCounter = 0
     while (left.arr.length && right.arr.length) {
         if(left.arr[0] <= right.arr[0]) {
-            animations.push({idx1: left.offset + arr.length, idx2: right.offset + rightCounter, translate: false})
+            animations.push({
+                idx1: left.offset + arr.length,
+                idx2: right.offset + rightCounter,
+                translate: false,
+                final: firstMerge ? 1 : 0
+            })
             arr.push(left.arr.shift())
         } else {
-            animations.push({idx1: left.offset + arr.length, idx2: right.offset + rightCounter, translate: true})
+            animations.push({
+                idx1: left.offset + arr.length,
+                idx2: right.offset + rightCounter,
+                translate: true,
+                final: firstMerge ? 2 : 0
+            })
             arr.push(right.arr.shift())
             rightCounter++
         }
