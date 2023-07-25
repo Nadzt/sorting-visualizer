@@ -6,7 +6,8 @@ import './App.css'
 
 function App() {
     const [barArray, setBarArray] = useState<number[]>([])
-    
+    const [animating, setAnimating] = useState(false)
+
     const barAmmount = 300
     const minBarValue = 10
     const maxBarValue = 700
@@ -16,7 +17,7 @@ function App() {
         return(() => {
             setBarArray(generateNewArray(barAmmount, minBarValue, maxBarValue))
         })
-    },[])
+    }, [])
 
     return (
         <div>

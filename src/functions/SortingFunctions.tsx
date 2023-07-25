@@ -20,32 +20,100 @@ const arraysAreEqual = (arr1: number[], arr2: number[]): boolean => {
     return true
 }
 
-export const testAlgorithm = (func: (x: number[]) => number[]) => {
+export const testAlgorithm = (func: "merge") => {
     for(let i = 0; i < 100; i++){
         const testArr = generateNewArray()
         const javascriptSorted = [...testArr].sort((a, b) => a - b)
-        const sortedTestArr = func(testArr)
+        let sortedTestArr: number[]
+        switch (func) {
+            case "merge":
+                sortedTestArr = mergeSort(testArr, []).arr
+                break
+        }
+        
         console.log(arraysAreEqual(javascriptSorted, sortedTestArr))        
     }
 }
 
-// sorting algorithms
+// animation functions
 
-export const mergeSort = (arr: number[]): number[] => {
-    if(arr.length === 1) return arr
-    const halfIndex = arr.length / 2
-    const right = arr.splice(halfIndex)
-    return mergeArray(mergeSort(arr), mergeSort(right))
+interface Animation {
+    idx1: number,
+    idx2: number,
+    translate: boolean,
 }
 
-const mergeArray = (left: number[], right: number[]): number[] => {
+interface OffsettedArr {
+    arr: number[],
+    offset: number 
+}
+
+export const createAnimation = (arr: number[], func: "merge" ): Animation[] => {
+    const animationsArray: Animation[] = []
+
+    switch (func) {
+        case "merge":
+            mergeSort(arr, animationsArray)
+    }
+
+    return animationsArray
+}
+
+export const animate = (animations: Animation []) => {
+    const green = "#619677"
+    const yellow = "#D5BC4C"
+    const red = "#9D3340"
+
+    const graph = document.querySelector(".graph")
+    animations.map((animation, i) => {
+        setTimeout(() => {
+            const barArray = Array.from(document.querySelectorAll<HTMLElement>(".graph__bar"))
+            barArray[animation.idx1].style.backgroundColor = yellow
+            barArray[animation.idx2].style.backgroundColor = yellow
+            setTimeout(() => {
+                if(animation.translate) {
+                    graph?.insertBefore(barArray[animation.idx2], barArray[animation.idx1])
+                    barArray[animation.idx1].style.backgroundColor = red
+                    barArray[animation.idx2].style.backgroundColor = red
+                } else {
+                    barArray[animation.idx1].style.backgroundColor = green
+                    barArray[animation.idx2].style.backgroundColor = green
+                }
+            }, 2)
+
+        }, 5 * i + 100)
+    })
+}
+
+// sorting algorithms
+
+export const mergeSort = (arr: number[], animations: Animation[] , offset = 0): OffsettedArr => {
+    if(arr.length === 1) return { arr, offset }
+    const halfIndex = Math.floor(arr.length / 2)
+    const right = arr.splice(halfIndex)
+    return { 
+        arr: mergeArray(
+            mergeSort(arr, animations, offset),
+            mergeSort(right, animations, offset + halfIndex),
+            animations
+        ),
+        offset
+    }
+}
+
+const mergeArray = (left: OffsettedArr, right: OffsettedArr, animations: Animation[]): number[] => {
     const arr = []
-    while (left.length && right.length) {
-        if(left[0] < right[0]) {
-            arr.push(left.shift())
+    let rightCounter = 0
+    while (left.arr.length && right.arr.length) {
+        if(left.arr[0] <= right.arr[0]) {
+            animations.push({idx1: left.offset + arr.length, idx2: right.offset + rightCounter, translate: false})
+            arr.push(left.arr.shift())
         } else {
-            arr.push(right.shift())
+            animations.push({idx1: left.offset + arr.length, idx2: right.offset + rightCounter, translate: true})
+            arr.push(right.arr.shift())
+            rightCounter++
         }
     }
-    return [...arr, ...left, ...right] as number[]
+
+    return [...arr, ...left.arr, ...right.arr] as number[]
 }
