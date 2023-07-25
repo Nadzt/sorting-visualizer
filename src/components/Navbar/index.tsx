@@ -11,15 +11,7 @@ const Navbar = ({ generateNewArray, barArray, setBarArray }: Props) => {
     return (
         <div className='navbar'>
             <button onClick={generateNewArray}>Generate new content</button>
-            <button onClick={() => {
-                        const animations = createAnimation(barArray, "merge")
-                        animate(animations)
-                        console.log(animations)
-                    }
-                }
-            >
-                Merge Sort
-            </button>
+            <button onClick={() => createAnimation(barArray, "merge")}>Merge Sort</button>
             <button onClick={() => testAlgorithm("merge")}>Test Merge Sort</button>
             
             <button onClick={generateNewArray}>Quick Sort</button>
