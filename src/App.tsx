@@ -4,26 +4,38 @@ import { generateNewArray } from "./functions/SortingFunctions"
 import { Graph, Navbar } from './components'
 import './App.css'
 
+
+
 function App() {
     const [barArray, setBarArray] = useState<number[]>([])
     const [animating, setAnimating] = useState(false)
-
-    const barAmmount = 300
-    const minBarValue = 10
-    const maxBarValue = 700
     
+    const setDefaultBarValues = () => {
+        const Ammount = Math.floor((window.innerWidth - 400) / 5)
+        const minValue = 10
+        const maxValue = 700
+
+        return { Ammount, minValue, maxValue }
+    }
+
+    const renderBars = () => {
+        if(animating) return
+        const bars = setDefaultBarValues()
+        setBarArray(generateNewArray(bars.Ammount, bars.minValue, bars.maxValue))
+    }
+
     useEffect(() => {
-        setBarArray(generateNewArray(barAmmount, minBarValue, maxBarValue))
+        renderBars()
+        window.addEventListener("resize", renderBars)
         return(() => {
-            setBarArray(generateNewArray(barAmmount, minBarValue, maxBarValue))
+            window.removeEventListener("resize", renderBars)
         })
     }, [])
 
     return (
         <div>
             <Navbar 
-                generateNewArray={() => setBarArray(generateNewArray(barAmmount, minBarValue, maxBarValue))}
-                setBarArray={setBarArray}
+                generateNewArray={renderBars}
                 barArray={barArray}
             />
             <Graph data={barArray}/>

@@ -1,19 +1,15 @@
-import { testAlgorithm, createAnimation, animate } from "../../functions/SortingFunctions"
+import { testAlgorithm, createAnimation } from "../../functions/SortingFunctions"
 import "./Navbar.scss"
 
 interface Props {
     generateNewArray: () => void,
     barArray: number[],
-    setBarArray: React.Dispatch<React.SetStateAction<number[]>>
 }
 
-const Navbar = ({ generateNewArray, barArray, setBarArray }: Props) => {
+const Navbar = ({ generateNewArray, barArray }: Props) => {
     return (
         <div className='navbar'>
-            <button 
-                onClick={() => generateNewArray()}>
-                Generate new content
-            </button>
+            <button onClick={generateNewArray}>Generate new content</button>
             <button onClick={() => createAnimation(barArray, "merge")}>Merge Sort</button>
             <button onClick={() => testAlgorithm("merge")}>Test Merge Sort</button>
             

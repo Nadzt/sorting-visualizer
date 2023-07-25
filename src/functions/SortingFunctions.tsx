@@ -51,7 +51,7 @@ interface OffsettedArr {
     offset: number 
 }
 
-export const createAnimation = (arr: number[], func: "merge" ): void => {
+export const createAnimation = (arr: number[], func: "merge"): void => {
     const animationsArray: Animation[] = []
 
     switch (func) {
@@ -62,7 +62,7 @@ export const createAnimation = (arr: number[], func: "merge" ): void => {
     animate(animationsArray)
 }
 
-export const animate = (animations: Animation []) => {
+const animate = (animations: Animation []) => {
     const green = "#619677"
     const yellow = "#D5BC4C"
     const red = "#9D3340"
