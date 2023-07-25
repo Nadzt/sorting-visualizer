@@ -5,12 +5,13 @@ interface Props {
 }
 
 const Graph = ({data}: Props) => {
+    
     return (
         <div className="graph">
             {data.map((bar, index) => (
                 <div 
                     className="graph__bar" 
-                    key={index}
+                    key={`idx${index}val${bar}`}
                     style={{ height: `${bar}px`}}
                 >
                 </div>

@@ -5,9 +5,11 @@ const randomInt = (min: number, max: number): number => {
 
 export const generateNewArray = (ammount = 1000, min = 5, max = 100): number[]=> {
     const newArray = []
+
     for(let i = 0; i < ammount; i++){
         newArray.push(randomInt(min, max))
     }
+
     return newArray
 }
 
@@ -56,7 +58,7 @@ export const createAnimation = (arr: number[], func: "merge" ): void => {
         case "merge":
             mergeSort(arr, animationsArray, 0, arr.length)
     }
-    console.log(animationsArray)
+
     animate(animationsArray)
 }
 
@@ -67,8 +69,10 @@ export const animate = (animations: Animation []) => {
     const black = "#0E1921"
 
     const graph = document.querySelector(".graph")
+
     animations.map((animation, i) => {
         setTimeout(() => {
+
             const barArray = Array.from(document.querySelectorAll<HTMLElement>(".graph__bar"))
             barArray[animation.idx1].style.backgroundColor = yellow
             barArray[animation.idx2].style.backgroundColor = yellow
@@ -76,15 +80,25 @@ export const animate = (animations: Animation []) => {
                 if(animation.translate) {
                     graph?.insertBefore(barArray[animation.idx2], barArray[animation.idx1])
                     barArray[animation.idx1].style.backgroundColor = red
-                    barArray[animation.idx2].style.backgroundColor = animation.final ? black : red
+                    barArray[animation.idx2].style.backgroundColor = red
                 } else {
-                    barArray[animation.idx1].style.backgroundColor = animation.final ? black : green
+                    barArray[animation.idx1].style.backgroundColor = green
                     barArray[animation.idx2].style.backgroundColor = green
                 }
-            }, 1000)
+            }, 10) 
 
-        }, 2500 * i + 100)
+        }, 25 * i + 100)
     })
+
+    setTimeout(() => {
+        const barArray = Array.from(document.querySelectorAll<HTMLElement>(".graph__bar"))
+        barArray.forEach((bar) => {
+            bar.style.backgroundColor = green
+            setTimeout(() => {
+                bar.style.backgroundColor = black
+            }, 500)
+        })
+    }, 25 * animations.length + 500)
 }
 
 // sorting algorithms

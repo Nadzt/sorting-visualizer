@@ -10,7 +10,10 @@ interface Props {
 const Navbar = ({ generateNewArray, barArray, setBarArray }: Props) => {
     return (
         <div className='navbar'>
-            <button onClick={generateNewArray}>Generate new content</button>
+            <button 
+                onClick={() => generateNewArray()}>
+                Generate new content
+            </button>
             <button onClick={() => createAnimation(barArray, "merge")}>Merge Sort</button>
             <button onClick={() => testAlgorithm("merge")}>Test Merge Sort</button>
             
