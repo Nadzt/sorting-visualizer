@@ -1,4 +1,4 @@
-import { OffsettedArr, Animation } from "./SortingFunctions"
+import { OffsettedArr, Animation } from "./sortingFunctions"
 
 export const mergeSort = (arr: number[], animations: Animation[] , offset = 0): OffsettedArr => {
     if(arr.length === 1) return { arr, offset }

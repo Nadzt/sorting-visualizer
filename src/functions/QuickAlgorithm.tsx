@@ -1,4 +1,4 @@
-import { Animation } from "./SortingFunctions"
+import { Animation } from "./sortingFunctions"
 
 export const quickSort = (arr: number[], animations: Animation[], offset = 0): number[] => {
     if(arr.length <= 1) return arr

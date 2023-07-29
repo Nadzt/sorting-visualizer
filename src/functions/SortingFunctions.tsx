@@ -1,14 +1,14 @@
 import { randomInt, arraysAreEqual } from "./helperFunctions"
-import { mergeSort } from "./MergeAlgorithm"
-import { quickSort } from "./QuickAlgorithm"
+import { mergeSort } from "./mergeAlgorithm"
+import { quickSort } from "./quickAlgorithm"
+import { heapSort } from "./heapAlgorithm"
 
 // interfaces and types
 export interface Animation {
     idx1: number,
     idx2: number,
     translate: boolean,
-    offset?: number,
-    areEqual?: boolean
+    offset?: number
 }
 
 export interface OffsettedArr {
@@ -16,8 +16,8 @@ export interface OffsettedArr {
     offset: number 
 }
 
-type sortFunc = "merge" | "quick"
-type setAnimatingState = React.Dispatch<React.SetStateAction<"standby" | "merge" | "quick">>
+type sortFunc = "merge" | "quick" | "heap"
+type setAnimatingState = React.Dispatch<React.SetStateAction<"standby" | "merge" | "quick" | "heap">>
 
 type animationFunction = typeof mergeAnimation | typeof quickAnimation
 
@@ -65,11 +65,15 @@ export const createAnimation = (arr: number[], func: sortFunc, setAnimating: set
             quickSort(arr, animationsArray)
             animationFunc = quickAnimation
             break
+        case "heap":
+            heapSort(arr)
+            animationFunc = heapAnimation
         }
 
         animate(animationsArray, setAnimating, animationFunc)
 }
 
+// Animations and animate function
 const mergeAnimation = (graph: Element, left: HTMLElement, right: HTMLElement) => {
     graph.insertBefore(right, left)
 }
@@ -82,6 +86,10 @@ const quickAnimation = (graph: Element, left: HTMLElement, right: HTMLElement, a
     } else {
         graph.insertBefore(left, right)
     }
+}
+
+const heapAnimation = () => {
+    ""
 }
 
 const animate = (animations: Animation [], setAnimating: setAnimatingState, func: animationFunction ) => {
