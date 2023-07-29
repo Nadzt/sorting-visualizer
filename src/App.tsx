@@ -1,42 +1,20 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
-import { generateNewArray } from "./functions/SortingFunctions"
 import { Graph, Navbar } from './components'
 import './App.css'
 
 
 
+
 function App() {
-    const [barArray, setBarArray] = useState<number[]>([])
-    const [animating, setAnimating] = useState(false)
-    
-    const setDefaultBarValues = () => {
-        const Ammount = Math.floor((window.innerWidth - 400) / 5)
-        const minValue = 10
-        const maxValue = 700
-
-        return { Ammount, minValue, maxValue }
-    }
-
-    const renderBars = () => {
-        if(animating) return
-        const bars = setDefaultBarValues()
-        setBarArray(generateNewArray(bars.Ammount, bars.minValue, bars.maxValue))
-    }
-
-    useEffect(() => {
-        renderBars()
-        window.addEventListener("resize", renderBars)
-        return(() => {
-            window.removeEventListener("resize", renderBars)
-        })
-    }, [])
+    const [barArray, setBarArray] = useState<number[]>([100, 50, 90, 20, 60, 30])
 
     return (
         <div>
+            <button onClick={() => console.log(barArray)}>barArray</button>
             <Navbar 
-                generateNewArray={renderBars}
                 barArray={barArray}
+                setBarArray={setBarArray}
             />
             <Graph data={barArray}/>
         </div>
