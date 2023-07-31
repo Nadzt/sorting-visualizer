@@ -34,7 +34,7 @@ export const generateNewArray = (ammount = 1000, min = 5, max = 100): number[]=>
 }
 
 // tests an algorithm, for development
-export const testAlgorithm = (func: "merge" | "quick") => {
+export const testAlgorithm = (func: "merge" | "quick" | "heap") => {
     for(let i = 0; i < 100; i++){
         const testArr = generateNewArray()
         const javascriptSorted = [...testArr].sort((a, b) => a - b)
@@ -45,6 +45,11 @@ export const testAlgorithm = (func: "merge" | "quick") => {
                 break
             case "quick":
                 sortedTestArr = quickSort(testArr, [])
+                break
+            case "heap":
+                sortedTestArr = heapSort(testArr, [])
+                break
+
         }
         console.log(arraysAreEqual(javascriptSorted, sortedTestArr))        
     }
@@ -66,7 +71,7 @@ export const createAnimation = (arr: number[], func: sortFunc, setAnimating: set
             animationFunc = quickAnimation
             break
         case "heap":
-            heapSort(arr)
+            heapSort(arr, animationsArray)
             animationFunc = heapAnimation
         }
 
@@ -88,8 +93,8 @@ const quickAnimation = (graph: Element, left: HTMLElement, right: HTMLElement, a
     }
 }
 
-const heapAnimation = () => {
-    ""
+const heapAnimation = (graph: Element, left: HTMLElement, right: HTMLElement) => {
+    [left.style.height, right.style.height] = [right.style.height, left.style.height]
 }
 
 const animate = (animations: Animation [], setAnimating: setAnimatingState, func: animationFunction ) => {
@@ -117,11 +122,11 @@ const animate = (animations: Animation [], setAnimating: setAnimatingState, func
 
     setTimeout(() => {
         const barArray = Array.from(document.querySelectorAll<HTMLElement>(".graph__bar"))
-        barArray.forEach((bar, i) => {
+        for(let i = 0; i < barArray.length; i++){
             setTimeout(() => {
-                bar.style.backgroundColor = green
+                barArray[i].style.backgroundColor = green
                 i === barArray.length - 1 && setAnimating("standby")
             }, i * animationTime)
-        })
+        }
     }, (animations.length + 1) * animationTime + 50)
 }

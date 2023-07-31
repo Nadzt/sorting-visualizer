@@ -34,10 +34,10 @@ const Navbar = ({ barArray, setBarArray }: Props) => {
     }, [barArray, animating])
 
 
-    // useEffect(() => {
-    //     const bars = setDefaultBarValues()
-    //     setBarArray(generateNewArray(bars.Ammount, bars.minValue, bars.maxValue))
-    // }, [setBarArray])
+    useEffect(() => {
+        const bars = setDefaultBarValues()
+        setBarArray(generateNewArray(bars.Ammount, bars.minValue, bars.maxValue))
+    }, [setBarArray])
 
     return (
         <div className='navbar'>
@@ -53,6 +53,7 @@ const Navbar = ({ barArray, setBarArray }: Props) => {
             <button onClick={() => testAlgorithm("quick")}>Test Quick Sort</button>
             ------------------------------
             <button onClick={() => setAnimating("heap")}>Heap Sort</button>
+            <button onClick={() => testAlgorithm("heap")}>Heap Quick Sort</button>
             ------------------------------
             <button>Bubble Sort</button>
         </div>
