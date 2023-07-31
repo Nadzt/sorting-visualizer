@@ -102,7 +102,7 @@ const quickAnimation = (graph: Element, left: HTMLElement, right: HTMLElement, a
     }
 }
 
-const heapAnimation = (graph: Element, left: HTMLElement, right: HTMLElement) => {
+const heapAnimation = (_graph: Element, left: HTMLElement, right: HTMLElement) => {
     [left.style.height, right.style.height] = [right.style.height, left.style.height]
 }
 
