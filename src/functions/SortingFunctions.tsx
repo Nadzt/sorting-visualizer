@@ -2,6 +2,7 @@ import { randomInt, arraysAreEqual } from "./helperFunctions"
 import { mergeSort } from "./mergeAlgorithm"
 import { quickSort } from "./quickAlgorithm"
 import { heapSort } from "./heapAlgorithm"
+import { bubbleSort } from "./bubbleAlgorithm"
 
 // interfaces and types
 export interface Animation {
@@ -16,8 +17,8 @@ export interface OffsettedArr {
     offset: number 
 }
 
-type sortFunc = "merge" | "quick" | "heap"
-type setAnimatingState = React.Dispatch<React.SetStateAction<"standby" | "merge" | "quick" | "heap">>
+type sortFunc = "merge" | "quick" | "heap" | "bubble"
+type setAnimatingState = React.Dispatch<React.SetStateAction<"standby" | sortFunc>>
 
 type animationFunction = typeof mergeAnimation | typeof quickAnimation
 
@@ -34,7 +35,7 @@ export const generateNewArray = (ammount = 1000, min = 5, max = 100): number[]=>
 }
 
 // tests an algorithm, for development
-export const testAlgorithm = (func: "merge" | "quick" | "heap") => {
+export const testAlgorithm = (func: sortFunc) => {
     for(let i = 0; i < 100; i++){
         const testArr = generateNewArray()
         const javascriptSorted = [...testArr].sort((a, b) => a - b)
@@ -48,6 +49,9 @@ export const testAlgorithm = (func: "merge" | "quick" | "heap") => {
                 break
             case "heap":
                 sortedTestArr = heapSort(testArr, [])
+                break
+            case "bubble":
+                sortedTestArr = bubbleSort()
                 break
 
         }
@@ -73,6 +77,11 @@ export const createAnimation = (arr: number[], func: sortFunc, setAnimating: set
         case "heap":
             heapSort(arr, animationsArray)
             animationFunc = heapAnimation
+            break
+        case "bubble":
+            bubbleSort()
+            animationFunc = bubbleAnimation
+            break
         }
 
         animate(animationsArray, setAnimating, animationFunc)
@@ -96,6 +105,11 @@ const quickAnimation = (graph: Element, left: HTMLElement, right: HTMLElement, a
 const heapAnimation = (graph: Element, left: HTMLElement, right: HTMLElement) => {
     [left.style.height, right.style.height] = [right.style.height, left.style.height]
 }
+
+const bubbleAnimation = () => {
+    console.log("bubble animation")
+}
+
 
 const animate = (animations: Animation [], setAnimating: setAnimatingState, func: animationFunction ) => {
     const green = "#619677"

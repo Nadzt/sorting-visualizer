@@ -18,7 +18,7 @@ const setDefaultBarValues = () => {
 }
 
 const Navbar = ({ barArray, setBarArray }: Props) => {
-    const [animating, setAnimating] = useState<"standby" | "merge" | "quick" | "heap">("standby")
+    const [animating, setAnimating] = useState<"standby" | "merge" | "quick" | "heap" | "bubble">("standby")
 
     // creates a new state of barArrays on App.tsx state
     const createNewBars = () => {
@@ -48,13 +48,15 @@ const Navbar = ({ barArray, setBarArray }: Props) => {
             }}>Generate new content</button>
             <button onClick={() => setAnimating("merge")}>Merge Sort</button>
             <button onClick={() => testAlgorithm("merge")}>Test Merge Sort</button>
-            ------------------------------
+            -------
             <button onClick={() => setAnimating("quick")}>Quick Sort</button>
             <button onClick={() => testAlgorithm("quick")}>Test Quick Sort</button>
-            ------------------------------
+            -------
             <button onClick={() => setAnimating("heap")}>Heap Sort</button>
             <button onClick={() => testAlgorithm("heap")}>Heap Quick Sort</button>
-            ------------------------------
+            -------
+            <button onClick={() => setAnimating("bubble")}>Bubble Sort</button>
+            <button onClick={() => testAlgorithm("bubble")}>Bubble Quick Sort</button>
             <button>Bubble Sort</button>
         </div>
     )
