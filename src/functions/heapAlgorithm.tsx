@@ -1,50 +1,55 @@
-// import { Animation } from "./sortingFunctions"
+import { Animation } from "./sortingFunctions"
 
-export const heapSort = (arr: number[]) => {
-    const heap = createMaxHeap(arr)
+export const heapSort = (arr: number[], animations: Animation[]) => {
+    const heap = createMaxHeap(arr, animations)
     
     let heapEnd = heap.length - 1
-    console.log(heap)
 
     while (heapEnd > 0) {
-        console.log(`swap ${heap[0]}, ${heap[heapEnd]}`);// write animation here
-        console.log(`delete ${heap[0]}`);// write animation here
         [heap[0], heap[heapEnd]] = [heap[heapEnd], heap[0]]
         let idx = 0
+        const newAnimation = {idx1: 0, idx2: heapEnd, translate: true}
+        animations.push(newAnimation, newAnimation, newAnimation)
         while (
             (heap[idx] < heap[heapChild(idx, "left")] && heapChild(idx, "left") < heapEnd) ||
             (heap[idx] < heap[heapChild(idx, "right")] && heapChild(idx, "right") < heapEnd)
         ){
+            const newAnimation = {idx1: idx, idx2: heapChild(idx, "left"), translate: true}
             if(heapChild(idx, "right") < heapEnd){
                 if(heap[heapChild(idx, "left")] >= heap[heapChild(idx, "right")]){
-                    console.log(`swap ${heap[idx]}, ${heap[heapChild(idx, "left")]}`);// write animation here
                     [heap[idx], heap[heapChild(idx, "left")]] = [heap[heapChild(idx, "left")], heap[idx]]
+                    animations.push(newAnimation, newAnimation, newAnimation)
                     idx = heapChild(idx, "left")
                 } else {
-                    console.log(`swap ${heap[idx]}, ${heap[heapChild(idx, "right")]}`);// write animation here
                     [heap[idx], heap[heapChild(idx, "right")]] = [heap[heapChild(idx, "right")], heap[idx]]
+                    animations.push(
+                        {...newAnimation, idx2: heapChild(idx, "right")},
+                        {...newAnimation, idx2: heapChild(idx, "right")},
+                        {...newAnimation, idx2: heapChild(idx, "right")}
+                    )
                     idx = heapChild(idx, "right")
                 }
             } else {
-                console.log(`swap ${heap[idx]}, ${heap[heapChild(idx, "left")]}`);// write animation here
                 [heap[idx], heap[heapChild(idx, "left")]] = [heap[heapChild(idx, "left")], heap[idx]]
+                animations.push(newAnimation, newAnimation, newAnimation)
                 idx = heapChild(idx, "left")
             }
         }
-
-        console.log(heap)
-        console.log("----------")
         heapEnd--
     }
+
+    return heap
 }
 
-const createMaxHeap = (arr: number[]): number[] => {
+const createMaxHeap = (arr: number[], animations: Animation[]): number[] => {
     const heap: number[] = []
-    for(let i = 0; i < arr.length; i++){0
+    for(let i = 0; i < arr.length; i++){
         heap.push(arr[i])
         let idx = i
         while (heap[idx] > heap[heapParent(idx)]){
             [heap[idx], heap[heapParent(idx)]] = [heap[heapParent(idx)], heap[idx]]
+            const newAnimation = {idx1: idx, idx2: heapParent(idx), translate: true}
+            animations.push(newAnimation, newAnimation, newAnimation)
             idx = heapParent(idx)
         }
     }
