@@ -51,7 +51,7 @@ export const testAlgorithm = (func: sortFunc) => {
                 sortedTestArr = heapSort(testArr, [])
                 break
             case "bubble":
-                sortedTestArr = bubbleSort()
+                sortedTestArr = bubbleSort(testArr, [])
                 break
 
         }
@@ -79,7 +79,7 @@ export const createAnimation = (arr: number[], func: sortFunc, setAnimating: set
             animationFunc = heapAnimation
             break
         case "bubble":
-            bubbleSort()
+            bubbleSort(arr, animationsArray)
             animationFunc = bubbleAnimation
             break
         }
@@ -106,8 +106,8 @@ const heapAnimation = (_graph: Element, left: HTMLElement, right: HTMLElement) =
     [left.style.height, right.style.height] = [right.style.height, left.style.height]
 }
 
-const bubbleAnimation = () => {
-    console.log("bubble animation")
+const bubbleAnimation = (_graph: Element, left: HTMLElement, right: HTMLElement) => {
+    [left.style.height, right.style.height] = [right.style.height, left.style.height]
 }
 
 
