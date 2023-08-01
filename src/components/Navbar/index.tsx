@@ -53,10 +53,10 @@ const Navbar = ({ barArray, setBarArray }: Props) => {
             <button onClick={() => testAlgorithm("quick")}>Test Quick Sort</button>
             -------
             <button onClick={() => setAnimating("heap")}>Heap Sort</button>
-            <button onClick={() => testAlgorithm("heap")}>Heap Quick Sort</button>
+            <button onClick={() => testAlgorithm("heap")}>Test Heap Sort</button>
             -------
             <button onClick={() => setAnimating("bubble")}>Bubble Sort</button>
-            <button onClick={() => testAlgorithm("bubble")}>Bubble Quick Sort</button>
+            <button onClick={() => testAlgorithm("bubble")}>Test Bubble Sort</button>
             <button>Bubble Sort</button>
         </div>
     )

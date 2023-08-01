@@ -1,8 +1,8 @@
 import { Animation } from "./sortingFunctions"
 
-export const heapSort = (arr: number[], animations: Animation[]) => {
+export const heapSort = (originalArr: number[], animations: Animation[]) => {
+    const arr = originalArr.splice(0)
     const heap = createMaxHeap(arr, animations)
-    
     let heapEnd = heap.length - 1
 
     while (heapEnd > 0) {
