@@ -60,7 +60,7 @@ export const testAlgorithm = (func: sortFunc) => {
 }
 
 // animation functions
-export const createAnimation = (arr: number[], func: sortFunc, setAnimating: setAnimatingState): void => {
+export const createAnimation = (arr: number[], func: sortFunc, setAnimating: setAnimatingState, speed: number): void => {
     if(arr.length <= 1) return setAnimating("standby")
     const animationsArray: Animation[] = []
     let animationFunc: animationFunction
@@ -84,7 +84,7 @@ export const createAnimation = (arr: number[], func: sortFunc, setAnimating: set
             break
         }
 
-        animate(animationsArray, setAnimating, animationFunc)
+        animate(animationsArray, setAnimating, animationFunc, speed)
 }
 
 // Animations and animate function
@@ -111,12 +111,12 @@ const bubbleAnimation = (_graph: Element, left: HTMLElement, right: HTMLElement)
 }
 
 
-const animate = (animations: Animation [], setAnimating: setAnimatingState, func: animationFunction ) => {
+const animate = (animations: Animation [], setAnimating: setAnimatingState, func: animationFunction, speed: number) => {
     const green = "#619677"
     const yellow = "#D5BC4C"
     const red = "#9D3340"
     const black = "#0E1921"
-    const animationTime = 1
+    const animationTime = speed
 
     const graph = document.querySelector(".graph")
     for (let i = 0; i < animations.length; i++) {

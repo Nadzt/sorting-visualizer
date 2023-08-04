@@ -10,54 +10,110 @@ interface Props {
 
 // sets the default values for the bars
 const setDefaultBarValues = () => {
-    const Ammount = Math.floor((window.innerWidth - 400) / 5)
+    const padding = window.innerWidth >= 1000 ? 400 : window.innerWidth >= 800 ? 200 : 100
+    const ammount = Math.floor((window.innerWidth - padding) / 5)
     const minValue = 10
-    const maxValue = 700
+    const maxValue = window.innerHeight - 250
 
-    return { Ammount, minValue, maxValue }
+    return { ammount, minValue, maxValue }
 }
 
 const Navbar = ({ barArray, setBarArray }: Props) => {
     const [animating, setAnimating] = useState<"standby" | "merge" | "quick" | "heap" | "bubble">("standby")
+    const [speed, setSpeed] = useState(1)
 
     // creates a new state of barArrays on App.tsx state
     const createNewBars = () => {
         if(animating !== "standby") return
         const bars = setDefaultBarValues()
-        setBarArray(generateNewArray(bars.Ammount, bars.minValue, bars.maxValue))
+        setBarArray(generateNewArray(bars.ammount, bars.minValue, bars.maxValue))
     }
 
     // creates the animation
     useEffect(() => {
         if(animating === "standby") return
-        createAnimation(barArray, animating, setAnimating)
-    }, [barArray, animating])
+        createAnimation(barArray, animating, setAnimating, speed)
+    }, [barArray, animating, speed])
 
 
     useEffect(() => {
         const bars = setDefaultBarValues()
-        setBarArray(generateNewArray(bars.Ammount, bars.minValue, bars.maxValue))
+        setBarArray(generateNewArray(bars.ammount, bars.minValue, bars.maxValue))
     }, [setBarArray])
 
     return (
         <div className='navbar'>
-            <div style={{color: "white", fontSize: 16, textTransform: "uppercase"}}>Animating: "{animating}"</div>
-            <button onClick={() => {
-            if(animating !== "standby") return
-            createNewBars()
-            }}>Generate new content</button>
-            <button onClick={() => setAnimating("merge")}>Merge Sort</button>
-            <button onClick={() => testAlgorithm("merge")}>Test Merge Sort</button>
-            -------
-            <button onClick={() => setAnimating("quick")}>Quick Sort</button>
-            <button onClick={() => testAlgorithm("quick")}>Test Quick Sort</button>
-            -------
-            <button onClick={() => setAnimating("heap")}>Heap Sort</button>
-            <button onClick={() => testAlgorithm("heap")}>Test Heap Sort</button>
-            -------
-            <button onClick={() => setAnimating("bubble")}>Bubble Sort</button>
-            <button onClick={() => testAlgorithm("bubble")}>Test Bubble Sort</button>
-            <button>Bubble Sort</button>
+            <button
+                disabled={animating !== "standby"}
+                className={`navbar__button navbar__button--create ${animating !== "standby" ? "navbar__disabled" : ""}`}
+                onClick={() => {
+                    if(animating !== "standby") return
+                    createNewBars()
+                }}
+            >
+                Generate new Bars
+            </button>
+
+            <div className="navbar__sorts">
+                <p className="navbar__text">
+                    Speed in ms:
+                </p>
+                <button 
+                    disabled={animating !== "standby" || speed === 1}
+                    className="navbar__button navbar__button--left"
+                    onClick={() => setSpeed(1)}
+                >
+                    1
+                </button>
+                <button 
+                    disabled={animating !== "standby" || speed === 50}
+                    onClick={() => setSpeed(50)}
+                    className="navbar__button navbar__button--middle"
+                >
+                    50
+                </button>
+                <button 
+                    disabled={animating !== "standby" || speed === 100}
+                    onClick={() => setSpeed(100)}
+                    className="navbar__button navbar__button--right"
+                >
+                    100
+                </button>
+            </div>
+
+            <div className="navbar__sorts">
+                <p className="navbar__text">
+                    Sort Algorithm:
+                </p>
+                <button 
+                    disabled={animating !== "standby"}
+                    className="navbar__button navbar__button--left" 
+                    onClick={() => setAnimating("merge")}
+                >
+                    Merge
+                </button>
+                <button 
+                    disabled={animating !== "standby"}
+                    className="navbar__button navbar__button--middle"
+                    onClick={() => setAnimating("quick")}
+                >
+                    Quick
+                </button>
+                <button 
+                    disabled={animating !== "standby"}
+                    className="navbar__button navbar__button--middle"
+                    onClick={() => setAnimating("heap")}
+                >
+                    Heap
+                </button>
+                <button 
+                    disabled={animating !== "standby"}
+                    className="navbar__button navbar__button--right"
+                    onClick={() => setAnimating("bubble")}
+                >
+                    Bubble
+                </button>
+            </div>
         </div>
     )
 }

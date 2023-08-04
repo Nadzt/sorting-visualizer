@@ -7,11 +7,10 @@ import './App.css'
 
 
 function App() {
-    const [barArray, setBarArray] = useState<number[]>([60, 50, 30, 10, 80, 70, 20, 40])
+    const [barArray, setBarArray] = useState<number[]>([])
 
     return (
         <div>
-            <button onClick={() => console.log(barArray)}>barArray</button>
             <Navbar 
                 barArray={barArray}
                 setBarArray={setBarArray}

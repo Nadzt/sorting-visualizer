@@ -1,4 +1,93 @@
 .navbar {
-    background-color: grey;
-    height: 40px;
+    background-color: #619677;
+    height: 100px;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    padding-left: 100px;
+    padding-right: 100px;
+    text-transform: uppercase;
+    
+    &__settings {
+        display: flex;
+    }
+
+    &__button {
+        color: #0E1921;
+        background-color: #ECE8E1;
+        border: none;
+        padding: .5rem 1.25rem;
+        text-transform: uppercase;
+        font-size: 1.7rem;
+        transition: all .2s ease-in-out;
+        border-top: 1px solid #0E1921;
+        border-bottom: 1px solid #0E1921;
+        cursor: pointer;
+        
+        &:hover {
+            transform: translateY(-1px);
+            box-shadow: inset 0 0px 0px 0px rgba(0, 0, 0, .2), 0 3px 3px 3px rgba(0, 0, 0, .2);
+        }
+
+        &:active {
+            transform: translateY(1px);
+            box-shadow: inset 0 3px 3px 3px rgba(0, 0, 0, .2), 0 0px 0px 0px rgba(0, 0, 0, .2);
+        }
+        
+        &:disabled {
+            background-color: gray;
+            color: #0E1921;
+            cursor: default;
+            transform: translateY(0);
+            box-shadow: inset 0 0px 0px 0px rgba(0, 0, 0, .2), 0 0px 0px 0px rgba(0, 0, 0, .2);
+        }
+
+        &--create {
+            border-radius: 4px;
+        }
+
+        &--left {
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+            border-right: 1px solid #0E1921;
+        }
+
+        &--middle {
+            border-right: 1px solid #0E1921;
+        }
+
+        &--right {
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+    }
+
+    &__sorts {
+        display: flex;
+    }
+
+    &__text {
+        margin-right: .5rem;
+        align-self: center;
+        font-size: 1.4rem;
+        font-weight: 600;
+    }
+}
+
+@media only screen and (max-width: 1120px) {
+    .navbar {
+        flex-direction: column;
+        align-items: start;
+        gap: .25rem;
+        padding: 1rem 5rem;
+        height: min-content;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .navbar {
+        &__sorts {
+            display: initial;
+        }
+    }
 }
