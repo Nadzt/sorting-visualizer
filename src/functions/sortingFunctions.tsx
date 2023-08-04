@@ -1,8 +1,8 @@
 import { randomInt, arraysAreEqual } from "./helperFunctions"
-import { mergeSort } from "./mergeAlgorithm"
-import { quickSort } from "./quickAlgorithm"
-import { heapSort } from "./heapAlgorithm"
-import { bubbleSort } from "./bubbleAlgorithm"
+import { mergeSort } from "./mergeAlgorithm.tsx"
+import { quickSort } from "./quickAlgorithm.tsx"
+import { heapSort } from "./heapAlgorithm.tsx"
+import { bubbleSort } from "./bubbleAlgorithm.tsx"
 
 // interfaces and types
 export interface Animation {

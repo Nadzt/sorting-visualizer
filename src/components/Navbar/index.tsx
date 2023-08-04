@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import { generateNewArray, createAnimation } from "../../functions/sortingFunctions"
+import { generateNewArray, createAnimation } from "../../functions/sortingFunctions.tsx"
 import "./Navbar.scss"
 
 interface Props {
